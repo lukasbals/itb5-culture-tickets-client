@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.ListEventsGuiController">
+    <top>
+        <ToolBar>
+            <TextField promptText="Search event"/>
+            <TextField promptText="Search artist" />
+            <TextField promptText="Search location"/>
+            <DatePicker promptText="Search date"/>
+        </ToolBar>
+    </top>
+    <center>
+        <TableView>
+            <columns>
+                <TableColumn prefWidth="200.0" text="Event">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="description"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Artist">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="artist"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Category">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="category"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Location">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="location"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="date"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="100.0" text="Price">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="price"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+                <FXCollections fx:id="_events" fx:factory="observableArrayList"/>
+            </items>
+        </TableView>
+    </center>
+</BorderPane>
