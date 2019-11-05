@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.collections.FXCollections?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.BorderPane?>
-
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <BorderPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.ListEventsGuiController">
     <top>
         <ToolBar>
             <TextField promptText="Search event"/>
-            <TextField promptText="Search artist" />
+            <TextField promptText="Search artist"/>
             <TextField promptText="Search location"/>
             <DatePicker promptText="Search date"/>
+            <Button text="Search" onAction="#searchTickets"/>
         </ToolBar>
     </top>
     <center>
@@ -27,9 +23,9 @@
                         <PropertyValueFactory property="description"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="150.0" text="Artist">
+                <TableColumn prefWidth="150.0" text="Artists">
                     <cellValueFactory>
-                        <PropertyValueFactory property="artist"/>
+                        <PropertyValueFactory property="artists"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="150.0" text="Category">
@@ -47,9 +43,9 @@
                         <PropertyValueFactory property="date"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="100.0" text="Price">
+                <TableColumn prefWidth="100.0" text="Price from">
                     <cellValueFactory>
-                        <PropertyValueFactory property="price"/>
+                        <PropertyValueFactory property="minPrice"/>
                     </cellValueFactory>
                 </TableColumn>
             </columns>

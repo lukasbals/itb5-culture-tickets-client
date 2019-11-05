@@ -9,21 +9,30 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class UI extends Application {
-    private static Parent _root;
-    private static ListEventsGuiController _listEventGuiController;
+    private static Stage _primaryStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Culture Tickets");
-        primaryStage.setScene(new Scene(MainWindow(this)));
-        primaryStage.show();
+        _primaryStage = primaryStage;
+        _primaryStage.setTitle("Culture Tickets");
+        _primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml_files/listEvents.fxml"))));
+        _primaryStage.show();
     }
 
-    private static Parent MainWindow(Application app) throws IOException {
-        FXMLLoader loader = new FXMLLoader(app.getClass().getResource("/fxml_files/listEvents.fxml"));
-        _root = loader.load();
-        _listEventGuiController = loader.getController();
-        return _root;
+    Stage getPrimaryStage() {
+        return _primaryStage;
+    }
+
+    // This method can be used everywhere to switch the scene
+    //        UI.changeScene("/fxml_files/buyTicket.fxml");
+    public static void changeScene(String fxml) {
+        Parent pane = null;
+        try {
+            pane = FXMLLoader.load(UI.class.getResource(fxml));
+            _primaryStage.getScene().setRoot(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void startUI() {
