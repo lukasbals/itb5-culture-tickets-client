@@ -16,7 +16,8 @@
         </ToolBar>
     </top>
     <center>
-        <TableView>
+        <TableView fx:id="tableViewEvents" onMouseClicked="#selectedEvent" prefHeight="590.0"
+                   prefWidth="500.0" editable="true">
             <columns>
                 <TableColumn prefWidth="200.0" text="Event">
                     <cellValueFactory>
