@@ -6,7 +6,9 @@ import at.fhv.td.rmi.interfaces.ISearchEvent;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -19,27 +21,39 @@ public class ListEventsGuiController implements Initializable {
     ISearchEvent _searchEvent;
     @FXML
     ObservableList<IEventDetailedViewDTO> _events;
+    @FXML
+    TextField _searchFieldEvent;
+    @FXML
+    TextField _searchFieldArtist;
+    @FXML
+    TextField _searchFieldLocation;
+    @FXML
+    DatePicker _searchFieldDate;
 
     @FXML
     private TableView<IEventDetailedViewDTO> tableViewEvents;
 
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
+        _searchFieldDate.setValue(LocalDate.now());
+
         try {
             _searchEvent = Main.getSessionFactory().createConnection();
-            this.loadEvents();
+            searchEvents();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     }
 
-    private void loadEvents() throws RemoteException {
+    public void searchEvents() throws RemoteException {
         _events.clear();
-        List<IEventDetailedViewDTO> events = _searchEvent.searchForEvents("", "", "", LocalDate.now());
+        List<IEventDetailedViewDTO> events = _searchEvent.searchForEvents(
+                _searchFieldEvent.getText(),
+                _searchFieldArtist.getText(),
+                _searchFieldLocation.getText(),
+                _searchFieldDate.getValue()
+        );
         _events.addAll(events);
-    }
-
-    public void searchTickets() {
-        // TODO: Implement the search logic
     }
 
     @FXML

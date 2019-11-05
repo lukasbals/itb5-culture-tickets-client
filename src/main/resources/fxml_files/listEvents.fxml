@@ -8,11 +8,11 @@
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.ListEventsGuiController">
     <top>
         <ToolBar>
-            <TextField promptText="Search event"/>
-            <TextField promptText="Search artist"/>
-            <TextField promptText="Search location"/>
-            <DatePicker promptText="Search date"/>
-            <Button text="Search" onAction="#searchTickets"/>
+            <TextField promptText="Search event" fx:id="_searchFieldEvent"/>
+            <TextField promptText="Search artist" fx:id="_searchFieldArtist"/>
+            <TextField promptText="Search location" fx:id="_searchFieldLocation"/>
+            <DatePicker promptText="Search date" fx:id="_searchFieldDate"/>
+            <Button text="Search" onAction="#searchEvents"/>
         </ToolBar>
     </top>
     <center>
