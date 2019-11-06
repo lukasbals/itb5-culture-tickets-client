@@ -43,6 +43,8 @@ public class DetailedViewGuiController implements Initializable {
             category.setText(_event.getCategory());
             date.setText(_event.getDate().toString());
             eventlocation.setText(_event.getLocation());
+            eventlocation.setMaxWidth(180);
+            eventlocation.setWrapText(true);
             artist.setText(_event.getArtists());
             if(_event.getPrices().length > 1)  {
                 price.setText("from € " + getLowestPrice().toString());
