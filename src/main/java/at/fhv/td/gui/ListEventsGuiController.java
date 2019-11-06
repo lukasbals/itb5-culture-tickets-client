@@ -59,10 +59,12 @@ public class ListEventsGuiController implements Initializable {
     @FXML
     public void selectedEvent(MouseEvent doubleClick) {
         int index = tableViewEvents.getSelectionModel().getSelectedIndex();
-        IEventDetailedViewDTO event = _events.get(index);
-        if (doubleClick.getClickCount() == 2) {
-            DetailedViewGuiController.setIEvent(event);
-            UI.changeScene("/fxml_files/detailedView.fxml");
+        if (index != -1) {
+            IEventDetailedViewDTO event = _events.get(index);
+            if (doubleClick.getClickCount() == 2) {
+                DetailedViewGuiController.setIEvent(event);
+                UI.changeScene("/fxml_files/detailedView.fxml");
+            }
         }
     }
 }
