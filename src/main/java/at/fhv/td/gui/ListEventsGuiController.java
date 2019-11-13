@@ -38,7 +38,7 @@ public class ListEventsGuiController implements Initializable {
         _searchFieldDate.setValue(LocalDate.now());
 
         try {
-            _searchEvent = Main.getSessionFactory().createConnection();
+            _searchEvent = Main.getSessionFactory().createSearchEvent();
             searchEvents();
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -62,8 +62,8 @@ public class ListEventsGuiController implements Initializable {
         if (index != -1) {
             IEventDetailedViewDTO event = _events.get(index);
             if (doubleClick.getClickCount() == 2) {
-                DetailedViewGuiController.setIEvent(event);
-                UI.changeScene("/fxml_files/detailedView.fxml");
+                BookingViewGuiController.setIEvent(event);
+                UI.changeScene("/fxml_files/eventBookingView.fxml");
             }
         }
     }

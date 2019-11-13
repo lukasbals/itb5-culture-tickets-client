@@ -6,5 +6,4 @@ import java.util.List;
 
 public interface ILoadClient extends Remote {
     public List<IClientDTO> loadClients() throws RemoteException;
-
 }

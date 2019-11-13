@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<BorderPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.172-ea"
-            xmlns:fx="http://javafx.com/fxml/1">
-    <center>
-        <Label text="This will be the pane to buy a ticket"/>
-    </center>
-</BorderPane>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.Button?>
+<GridPane fx:id="gridPane" prefHeight="500.0" prefWidth="900.0" alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.172-ea"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.BuyTicketGuiController">
+    <Label text="You bought the following tickets: " GridPane.columnIndex="1" GridPane.columnSpan="3"
+           GridPane.halignment="CENTER"
+           GridPane.rowIndex="0" GridPane.rowSpan="1">
+        <font>
+            <Font name="Arial" size="24"/>
+        </font>
+        <GridPane.margin>
+            <Insets bottom="20" top="20"/>
+        </GridPane.margin>
+    </Label>
+    <Button fx:id="backButton" onAction="#backButtonCliched" prefWidth="150" text="Back"/>
+</GridPane>
+

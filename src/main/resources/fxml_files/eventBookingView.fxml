@@ -4,62 +4,74 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" hgap="30.0" prefHeight="400.0" prefWidth="600.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.BookingViewGuiController">
-    <padding>
-        <Insets bottom="40" left="40" right="40" top="40" />
-    </padding>
-    <columnConstraints>
-        <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="109.0" prefWidth="119.0" />
-        <ColumnConstraints maxWidth="Infinity" minWidth="145.0" prefWidth="171.0" />
-    </columnConstraints>
-    <Label text="Booking View" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.rowSpan="1">
-        <font>
-            <Font name="Arial" size="24" />
-        </font>
-        <GridPane.margin>
-            <Insets bottom="20" top="20" />
-        </GridPane.margin>
-    </Label>
-    <Label text="Customer " GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-    <Label text="Name: " GridPane.rowIndex="2" />
-    <Label text="Tickets " GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-    <Label text="Category name: " GridPane.rowIndex="4" />
-    <Label text="Price: " GridPane.rowIndex="5" />
-    <Label text="Number: " GridPane.rowIndex="6" />
-    <ComboBox fx:id="customername" onAction="#checkAccept" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-    <ComboBox fx:id="categoryname" onAction="#checkAccept" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-    <Label fx:id="price" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-    <ComboBox fx:id="ticketnumber" onAction="#checkAccept" prefWidth="300" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.rowSpan="1">
-        <children>
-            <Button fx:id="buy" onAction="#buyButtonClicked" prefWidth="150" text="Buy">
-                <HBox.margin>
-                    <Insets right="40.0" />
-                </HBox.margin>
-            </Button>
-            <Button fx:id="reserve" onAction="#reserveButtonClicked" prefWidth="150" text="Reserve">
-                <HBox.margin>
-                    <Insets right="40.0" />
-                </HBox.margin>
-            </Button>
-            <Button fx:id="cancel" onAction="#cancelButtonClicked" prefWidth="150" text="Cancel" />
-        </children>
-    </HBox>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
-</GridPane>
+<ScrollPane xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="at.fhv.td.gui.BookingViewGuiController">
+    <GridPane fx:id="gridpane" alignment="CENTER" hgap="30.0" prefHeight="400.0" prefWidth="1000.0" vgap="10.0">
+        <padding>
+            <Insets bottom="40" left="40" right="40" top="40"/>
+        </padding>
+        <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="109.0" prefWidth="130.0"/>
+            <ColumnConstraints maxWidth="Infinity" minWidth="40.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="0.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="0.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="50.0" minWidth="4.0" prefWidth="50.0"/>
+        </columnConstraints>
+        <Label text="Booking View" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.halignment="CENTER"
+               GridPane.rowIndex="0" GridPane.rowSpan="1">
+            <font>
+                <Font name="Arial" size="24"/>
+            </font>
+            <GridPane.margin>
+                <Insets bottom="20" top="20"/>
+            </GridPane.margin>
+        </Label>
+        <Label text="Eventname: " GridPane.rowIndex="1"/>
+        <Label text="Category: " GridPane.rowIndex="2"/>
+        <Label text="Date: " GridPane.rowIndex="3"/>
+        <Label text="Location: " GridPane.rowIndex="4"/>
+        <Label text="Artist: " GridPane.rowIndex="5"/>
+        <Label text="Price: " GridPane.rowIndex="6"/>
+        <Label fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3"/>
+        <Label fx:id="category" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+        <Label fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"/>
+        <Label fx:id="eventlocation" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="5"/>
+        <Label fx:id="artist" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="3"/>
+        <Label fx:id="price" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="3"/>
+
+        <Label text="Customer " GridPane.halignment="LEFT" GridPane.rowIndex="7"/>
+        <Label text="Name: " GridPane.rowIndex="8"/>
+        <Label text="Tickets " GridPane.halignment="LEFT" GridPane.rowIndex="9"/>
+        <ComboBox fx:id="customername" onAction="#checkAccept" prefWidth="300" GridPane.columnIndex="1"
+                  GridPane.columnSpan="3" GridPane.rowIndex="8"/>
+
+        <HBox fx:id="buttonBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="6"
+              GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.rowSpan="1">
+            <children>
+                <Button fx:id="buy" onAction="#buyButtonClicked" prefWidth="150" text="Buy">
+                    <HBox.margin>
+                        <Insets right="40.0"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="reserve" onAction="#reserveButtonClicked" prefWidth="150" text="Reserve">
+                    <HBox.margin>
+                        <Insets right="40.0"/>
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="cancel" onAction="#cancelButtonClicked" prefWidth="150" text="Cancel"/>
+            </children>
+        </HBox>
+    </GridPane>
+</ScrollPane>
