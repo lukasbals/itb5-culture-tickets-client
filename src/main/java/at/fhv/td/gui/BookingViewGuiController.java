@@ -88,14 +88,14 @@ public class BookingViewGuiController implements Initializable {
         List<String>  placeCategories = Arrays.asList(_event.getPlaceCategories());
         placeCategories.sort(Comparator.naturalOrder());
         for (int i = 0; i < placeCategories.size(); i++) {
-            String category = placeCategories.get(i);
+            String placeCategory = placeCategories.get(i);
             int count = _event.getPlaceCategoriesAmount()[i];
-            Float price = _event.getPrices()[i];
-            Label priceLabel = new Label(price + " €");
+            Float categoryPrice = _event.getPrices()[i];
+            Label priceLabel = new Label(categoryPrice + " €");
             gridpane.add(new Label("Preis: "), 1, rowIndex);
             gridpane.add(priceLabel, 2, rowIndex);
             gridpane.setConstraints(priceLabel, 2, rowIndex, 2, 1);
-            gridpane.add(new Label(category), 0, rowIndex++);
+            gridpane.add(new Label(placeCategory), 0, rowIndex++);
             int colIndex = 1;
             for (int j = 1; j <= count; j++, colIndex++) {
                 if ((j - 1) % 10 == 0) {
@@ -103,7 +103,7 @@ public class BookingViewGuiController implements Initializable {
                     colIndex = 1;
                 }
                 CheckBox checkbox = new CheckBox(Integer.toString(j));
-                checkbox.setDisable(isAvailable(j, category));
+                checkbox.setDisable(isAvailable(j, placeCategory));
                 if (checkbox.isDisabled()) {
                     checkbox.setSelected(true);
                 }
@@ -135,23 +135,19 @@ public class BookingViewGuiController implements Initializable {
 
     @FXML
     public void checkAccept() {
-        if ((customername.getSelectionModel().getSelectedItem() != null)) {
-            validRes.set(false);
-        } else {
-            validRes.set(true);
-        }
+        validRes.set(!((customername.getSelectionModel().getSelectedItem() != null)));
     }
 
     private HashMap<Long, Integer[]> checkCheckboxes() throws RemoteException {
         ObservableList<Node> elements = gridpane.getChildren();
-        String category = new String();
+        String placeCategory;
         HashMap<Long, Integer[]> ticketNumbers = new HashMap<>();
         for (int i = 0; i < elements.size(); i++) {
             Node node = elements.get(i);
             if (node instanceof Label) {
                 Label label = (Label) node;
                 if (Arrays.asList(_event.getPlaceCategories()).contains(label.getText())) {
-                    category = label.getText();
+                    placeCategory = label.getText();
                     i++;
                     node = elements.get(i);
                     int categoryNumber = -1;
@@ -161,7 +157,7 @@ public class BookingViewGuiController implements Initializable {
                         if (checkbox.isSelected() && !checkbox.isDisabled()) {
                             int ticketnumber = Integer.parseInt(checkbox.getText());
                             for (int j = 0; j < _event.getPlaceCategories().length; j++) {
-                                if (_event.getPlaceCategories()[j].equals(category)) {
+                                if (_event.getPlaceCategories()[j].equals(placeCategory)) {
                                     categoryNumber = j;
                                     tickets.add(ticketnumber);
                                 }
@@ -171,7 +167,7 @@ public class BookingViewGuiController implements Initializable {
                         node = elements.get(i);
                     }
                     i++;
-                    if (tickets.size() > 0) {
+                    if (!tickets.isEmpty()) {
                         Integer[] numbers = new Integer[tickets.size()];
                         ticketNumbers.put(_event.getPlaceCategoriesId()[categoryNumber], tickets.toArray(numbers));
                     }
@@ -194,7 +190,7 @@ public class BookingViewGuiController implements Initializable {
             showErrorMessage("Ticket not available", buy.getMessage());
             UI.changeScene("/fxml_files/eventBookingView.fxml");
         } else {
-            BuyTicketGuiController.SetAnswer(buy.getTickets());
+            BuyTicketGuiController.setAnswer(buy.getTickets());
             UI.changeScene("/fxml_files/buyTicket.fxml");
         }
     }

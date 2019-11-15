@@ -20,7 +20,7 @@ public class BuyTicketGuiController implements Initializable {
     @FXML
     private Button backButton;
 
-    public static void SetAnswer(ITicketDTO[] tickets) {
+    public static void setAnswer(ITicketDTO[] tickets) {
         _tickets = tickets;
     }
 
