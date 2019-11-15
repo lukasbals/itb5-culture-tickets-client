@@ -21,7 +21,7 @@
             <columns>
                 <TableColumn prefWidth="200.0" text="Event">
                     <cellValueFactory>
-                        <PropertyValueFactory property="description"/>
+                        <PropertyValueFactory property="eventName"/>
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn prefWidth="150.0" text="Artists">

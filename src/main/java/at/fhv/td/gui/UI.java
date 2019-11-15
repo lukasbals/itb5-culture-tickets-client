@@ -15,7 +15,7 @@ public class UI extends Application {
     public void start(Stage primaryStage) throws Exception {
         _primaryStage = primaryStage;
         _primaryStage.setTitle("Culture Tickets");
-        _primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml_files/listEvents.fxml"))));
+        _primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml_files/login.fxml"))));
         _primaryStage.show();
     }
 

@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 class RMI {
     static IClientSessionFactory setupRMI() {
         try {
-            return (IClientSessionFactory) Naming.lookup("rmi://localhost/clientFactory");
+            return (IClientSessionFactory) Naming.lookup("rmi://10.0.51.93/clientFactory");
         } catch (NotBoundException | MalformedURLException | RemoteException e) {
             e.printStackTrace();
         }

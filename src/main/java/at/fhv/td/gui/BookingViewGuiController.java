@@ -28,9 +28,6 @@ public class BookingViewGuiController implements Initializable {
     private Button reserve;
 
     @FXML
-    private Button buy;
-
-    @FXML
     private ComboBox customername;
 
     @FXML

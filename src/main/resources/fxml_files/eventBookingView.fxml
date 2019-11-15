@@ -19,14 +19,14 @@
         <columnConstraints>
             <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="109.0" prefWidth="130.0"/>
             <ColumnConstraints maxWidth="Infinity" minWidth="40.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="0.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="0.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
-            <ColumnConstraints maxWidth="25.0" minWidth="4.0" prefWidth="25.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="0.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="0.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
+            <ColumnConstraints maxWidth="35.0" minWidth="4.0" prefWidth="35.0"/>
             <ColumnConstraints maxWidth="50.0" minWidth="4.0" prefWidth="50.0"/>
         </columnConstraints>
         <Label text="Booking View" GridPane.columnIndex="0" GridPane.columnSpan="6" GridPane.halignment="CENTER"
@@ -60,7 +60,7 @@
         <HBox fx:id="buttonBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="6"
               GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.rowSpan="1">
             <children>
-                <Button fx:id="buy" onAction="#buyButtonClicked" prefWidth="150" text="Buy">
+                <Button onAction="#buyButtonClicked" prefWidth="150" text="Buy">
                     <HBox.margin>
                         <Insets right="40.0"/>
                     </HBox.margin>
@@ -70,7 +70,7 @@
                         <Insets right="40.0"/>
                     </HBox.margin>
                 </Button>
-                <Button fx:id="cancel" onAction="#cancelButtonClicked" prefWidth="150" text="Cancel"/>
+                <Button onAction="#cancelButtonClicked" prefWidth="150" text="Cancel"/>
             </children>
         </HBox>
     </GridPane>
