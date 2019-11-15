@@ -88,8 +88,10 @@ public class BookingViewGuiController implements Initializable {
 
     private void loadTickets() throws RemoteException {
         int rowIndex = 10;
-        for (int i = 0; i < _event.getPlaceCategories().length; i++) {
-            String category = _event.getPlaceCategories()[i];
+        List<String>  placeCategories = Arrays.asList(_event.getPlaceCategories());
+        placeCategories.sort(Comparator.naturalOrder());
+        for (int i = 0; i < placeCategories.size(); i++) {
+            String category = placeCategories.get(i);
             int count = _event.getPlaceCategoriesAmount()[i];
             Float price = _event.getPrices()[i];
             Label priceLabel = new Label(price + " €");
@@ -190,35 +192,51 @@ public class BookingViewGuiController implements Initializable {
         alert.showAndWait();
     }
 
+    private void checkMessage(IBuyTicket buy) throws RemoteException{
+        if (buy.getMessage().contains("failed")) {
+            showErrorMessage("Ticket not available", buy.getMessage());
+            UI.changeScene("/fxml_files/eventBookingView.fxml");
+        } else {
+            BuyTicketGuiController.SetAnswer(buy.getTickets());
+            UI.changeScene("/fxml_files/buyTicket.fxml");
+        }
+    }
+
+    private ITicketDTO createTicketDTO () throws RemoteException {
+        ITicketDTO ticket = Main.getSessionFactory().createTicketDTO();
+        int clientIndex = customername.getSelectionModel().getSelectedIndex();
+        if (clientIndex != -1) {
+            IClientDTO client = clients.get(clientIndex);
+            ticket.setClientId(client.getId());
+        }
+        ticket.setEventId(_event.getEventId());
+        return ticket;
+    }
+
     @FXML
     public void buyButtonClicked() throws RemoteException {
         HashMap<Long, Integer[]> categoryAndTickets = checkCheckboxes();
         if (categoryAndTickets.size() == 0) {
             showErrorMessage("No ticket selected", "Please select a ticket");
         } else {
-            ITicketDTO ticket = Main.getSessionFactory().createTicketDTO();
-            ;
-            int clientIndex = customername.getSelectionModel().getSelectedIndex();
-            if (clientIndex != -1) {
-                IClientDTO client = clients.get(clientIndex);
-                ticket.setClientId(client.getId());
-            }
-            ticket.setEventId(_event.getEventId());
+            ITicketDTO ticket = createTicketDTO();
             IBuyTicket buy = Main.getSessionFactory().createBuyTicket();
             buy.buyTicket(ticket, categoryAndTickets);
-            if (buy.getMessage().contains("failed")) {
-                showErrorMessage("Ticket not available", buy.getMessage());
-                UI.changeScene("/fxml_files/eventBookingView.fxml");
-            } else {
-                BuyTicketGuiController.SetAnswer(buy.getTickets());
-                UI.changeScene("/fxml_files/buyTicket.fxml");
-            }
+            checkMessage(buy);
         }
     }
 
     @FXML
-    public void reserveButtonClicked() {
-        UI.changeScene("/fxml_files/reserveTicket.fxml");
+    public void reserveButtonClicked() throws RemoteException {
+        HashMap<Long, Integer[]> categoryAndTickets = checkCheckboxes();
+        if (categoryAndTickets.size() == 0) {
+            showErrorMessage("No ticket selected", "Please select a ticket");
+        } else {
+            ITicketDTO ticket = createTicketDTO();
+            IBuyTicket buy = Main.getSessionFactory().createBuyTicket();
+            buy.reserveTicket(ticket, categoryAndTickets);
+            checkMessage(buy);
+        }
     }
 
     @FXML
