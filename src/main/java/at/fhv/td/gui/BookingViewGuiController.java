@@ -58,8 +58,8 @@ public class BookingViewGuiController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            _loadClient = Main.getSessionFactory().createClient();
-            ILoadTicket loadTicket = Main.getSessionFactory().createLoadTicket();
+            _loadClient = Main.getSession().createClient();
+            ILoadTicket loadTicket = Main.getSession().createLoadTicket();
             _unavailableTickets = loadTicket.getUnavailableTickets(_event.getEventId());
             loadClients();
             loadTickets();
@@ -196,7 +196,7 @@ public class BookingViewGuiController implements Initializable {
     }
 
     private ITicketDTO createTicketDTO () throws RemoteException {
-        ITicketDTO ticket = Main.getSessionFactory().createTicketDTO();
+        ITicketDTO ticket = Main.getSession().createTicketDTO();
         int clientIndex = customername.getSelectionModel().getSelectedIndex();
         if (clientIndex != -1) {
             IClientDTO client = clients.get(clientIndex);
@@ -213,7 +213,7 @@ public class BookingViewGuiController implements Initializable {
             showErrorMessage("No ticket selected", "Please select a ticket");
         } else {
             ITicketDTO ticket = createTicketDTO();
-            IBuyTicket buy = Main.getSessionFactory().createBuyTicket();
+            IBuyTicket buy = Main.getSession().createBuyTicket();
             buy.buyTicket(ticket, categoryAndTickets);
             checkMessage(buy);
         }
@@ -226,7 +226,7 @@ public class BookingViewGuiController implements Initializable {
             showErrorMessage("No ticket selected", "Please select a ticket");
         } else {
             ITicketDTO ticket = createTicketDTO();
-            IBuyTicket buy = Main.getSessionFactory().createBuyTicket();
+            IBuyTicket buy = Main.getSession().createBuyTicket();
             buy.reserveTicket(ticket, categoryAndTickets);
             checkMessage(buy);
         }

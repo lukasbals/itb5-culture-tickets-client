@@ -38,7 +38,7 @@ public class ListEventsGuiController implements Initializable {
         _searchFieldDate.setValue(LocalDate.now());
 
         try {
-            _searchEvent = Main.getSessionFactory().createSearchEvent();
+            _searchEvent = Main.getSession().createSearchEvent();
             searchEvents();
         } catch (RemoteException e) {
             e.printStackTrace();
