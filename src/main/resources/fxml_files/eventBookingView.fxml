@@ -59,19 +59,17 @@
 
         <HBox fx:id="buttonBox" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="0" GridPane.columnSpan="6"
               GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.rowSpan="1">
-            <children>
-                <Button onAction="#buyButtonClicked" prefWidth="150" text="Buy">
-                    <HBox.margin>
-                        <Insets right="40.0"/>
-                    </HBox.margin>
-                </Button>
-                <Button fx:id="reserve" onAction="#reserveButtonClicked" prefWidth="150" text="Reserve">
-                    <HBox.margin>
-                        <Insets right="40.0"/>
-                    </HBox.margin>
-                </Button>
-                <Button onAction="#cancelButtonClicked" prefWidth="150" text="Cancel"/>
-            </children>
+            <Button onAction="#buyButtonClicked" prefWidth="150" text="Buy">
+                <HBox.margin>
+                    <Insets right="40.0"/>
+                </HBox.margin>
+            </Button>
+            <Button fx:id="reserve" onAction="#reserveButtonClicked" prefWidth="150" text="Reserve">
+                <HBox.margin>
+                    <Insets right="40.0"/>
+                </HBox.margin>
+            </Button>
+            <Button onAction="#cancelButtonClicked" prefWidth="150" text="Cancel"/>
         </HBox>
     </GridPane>
 </ScrollPane>

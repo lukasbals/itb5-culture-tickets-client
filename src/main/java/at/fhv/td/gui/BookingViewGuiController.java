@@ -116,8 +116,8 @@ public class BookingViewGuiController implements Initializable {
     }
 
     private boolean isAvailable(int number, String castegory) throws RemoteException {
-        for (int i = 0; i < _unavailableTickets.length; i++) {
-            if (_unavailableTickets[i].getCategoryName().equals(castegory) && _unavailableTickets[i].getTicketNumber() == number) {
+        for (ITicketDTO unavailableTicket : _unavailableTickets) {
+            if (unavailableTicket.getCategoryName().equals(castegory) && unavailableTicket.getTicketNumber() == number) {
                 return true;
             }
         }
@@ -135,7 +135,7 @@ public class BookingViewGuiController implements Initializable {
 
     @FXML
     public void checkAccept() {
-        validRes.set(!((customername.getSelectionModel().getSelectedItem() != null)));
+        validRes.set(customername.getSelectionModel().getSelectedItem() == null);
     }
 
     private HashMap<Long, Integer[]> checkCheckboxes() throws RemoteException {

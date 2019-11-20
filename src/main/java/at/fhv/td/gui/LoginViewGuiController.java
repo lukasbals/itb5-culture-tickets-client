@@ -39,7 +39,7 @@ public class LoginViewGuiController implements Initializable {
 
     @FXML
     public void checkAccept() {
-        valid.set(!((!username.getText().equals("")) && (!password.getText().equals(""))));
+        valid.set(!(!username.getText().equals("") && !password.getText().equals("")));
     }
 
     @FXML
