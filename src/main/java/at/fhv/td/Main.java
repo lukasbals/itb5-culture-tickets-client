@@ -12,7 +12,11 @@ public class Main {
     private static IClientSession _session = null;
 
     public static void main(String[] args) {
-        _sessionFactory = RMI.setupRMI();
+        String host = "10.0.51.93";
+        if (args.length > 0) {
+            host = args[0];
+        }
+        _sessionFactory = RMI.setupRMI(host);
         UI.startUI();
     }
 

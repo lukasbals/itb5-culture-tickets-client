@@ -24,3 +24,33 @@ This repository represents the client of the application.
 * Documented
 * Tested
 * AC's are fulfilled
+
+## Test
+
+Run the unit tests with the following commands:
+
+```shell script
+mvn clean test
+```
+
+## Build
+
+Build the app with the following commands:
+
+```shell script
+mvn clean -U package
+```
+
+## Run
+
+Run the app with the following commands:
+
+```shell script
+java -jar target/itb5-culture-tickets-client-1.0-SNAPSHOT.jar
+```
+
+If you want to use the locally running backend specify the host manually:
+
+```shell script
+java -jar target/itb5-culture-tickets-client-1.0-SNAPSHOT.jar localhost
+```
