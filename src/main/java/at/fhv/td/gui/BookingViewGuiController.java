@@ -86,7 +86,6 @@ public class BookingViewGuiController implements Initializable {
     private void loadTickets() throws RemoteException {
         int rowIndex = 10;
         List<String>  placeCategories = Arrays.asList(_event.getPlaceCategories());
-        placeCategories.sort(Comparator.naturalOrder());
         for (int i = 0; i < placeCategories.size(); i++) {
             String placeCategory = placeCategories.get(i);
             int count = _event.getPlaceCategoriesAmount()[i];
