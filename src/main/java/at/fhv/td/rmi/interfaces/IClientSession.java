@@ -4,13 +4,15 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface IClientSession extends Remote {
-    public ISearchEvent createSearchEvent() throws RemoteException;
+    ISearchEvent createSearchEvent() throws RemoteException;
 
-    public IBuyTicket createBuyTicket() throws RemoteException;
+    IBuyTicket createBuyTicket() throws RemoteException;
 
-    public ILoadClient createClient() throws RemoteException;
+    ILoadClient createClient() throws RemoteException;
 
-    public ITicketDTO createTicketDTO() throws RemoteException;
+    ITicketDTO createTicketDTO() throws RemoteException;
 
-    public ILoadTicket createLoadTicket() throws RemoteException;
+    ILoadTicket createLoadTicket() throws RemoteException;
+
+    IMessageFeed createMessageFeed() throws RemoteException;
 }
