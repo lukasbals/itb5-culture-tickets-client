@@ -1,5 +1,6 @@
 package at.fhv.td.jms;
 
+import at.fhv.td.Main;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.JMSException;
@@ -14,7 +15,7 @@ abstract class JMSClient {
 
     JMSClient(String clientId, int acknowledgeType) {
         try {
-            _conFac = new ActiveMQConnectionFactory("tcp://localhost:61616");
+            _conFac = new ActiveMQConnectionFactory("tcp://" + Main.IP_ADDRESS + ":61616");
             _con = _conFac.createTopicConnection();
             _con.setClientID("culture-tickets-" + clientId);
             _session = _con.createTopicSession(false, acknowledgeType);

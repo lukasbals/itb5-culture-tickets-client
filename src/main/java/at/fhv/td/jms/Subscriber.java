@@ -1,17 +1,31 @@
 package at.fhv.td.jms;
 
-import at.fhv.td.rss.FeedMessage;
+import at.fhv.td.gui.ListEventsGuiController;
+import at.fhv.td.rss.FeedMessageEx;
 
 import javax.jms.*;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Subscriber extends JMSClient implements MessageListener {
+    private static Subscriber _instance;
     private List<TopicSubscriber> _durableSubscribers = new LinkedList<>();
+    private ListEventsGuiController _controller;
 
-    public Subscriber(List<String> topics, String userId) {
+    private Subscriber(List<String> topics, String userId, ListEventsGuiController controller) {
         super("subscriber-" + userId, Session.CLIENT_ACKNOWLEDGE);
+        _controller = controller;
+        _instance = this;
         initTopics(topics, userId);
+    }
+
+    public static Subscriber createInstance(List<String> topics, String userId, ListEventsGuiController controller) {
+        _instance = new Subscriber(topics, userId, controller);
+        return _instance;
+    }
+
+    public static Subscriber getInstance() {
+        return _instance;
     }
 
     private void initTopics(List<String> topics, String userId) {
@@ -30,15 +44,19 @@ public class Subscriber extends JMSClient implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        if (message instanceof ObjectMessage) {
-            FeedMessage newMessage = null;
-            try {
-                newMessage = (FeedMessage) (((ObjectMessage) message).getObject());
-                // TODO do something with the incoming message
-                System.out.println("RECEIVED: " + newMessage.getTitle());
-            } catch (JMSException e) {
-                e.printStackTrace();
+        synchronized (this) {
+            if (message instanceof ObjectMessage) {
+                FeedMessageEx newMessage = new FeedMessageEx((ObjectMessage) message);
+                _controller.getMessageList().add(newMessage);
             }
+        }
+    }
+
+    public void acknowledgeMessage(Message message) {
+        try {
+            message.acknowledge();
+        } catch (JMSException e) {
+            e.printStackTrace();
         }
     }
 

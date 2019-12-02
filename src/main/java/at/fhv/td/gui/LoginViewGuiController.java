@@ -49,6 +49,7 @@ public class LoginViewGuiController implements Initializable {
 
         if (session != null) {
             Main.setSession(session);
+            Main.setUserName(username.getText());
             UI.changeScene("/fxml_files/listEvents.fxml");
         }
 

@@ -73,20 +73,25 @@
             </center>
         </BorderPane>
     </Tab>
-    <Tab text="News">
+    <Tab text="News" fx:id="_newsTab">
         <HBox prefHeight="600.0" prefWidth="900.0">
-            <GridPane minHeight="900" prefHeight="600" prefWidth="400.0">
-                <TableView fx:id="tableViewTopics" prefHeight="460.0" prefWidth="258.0"
+            <GridPane minHeight="900" prefHeight="600" prefWidth="600.0">
+                <TableView fx:id="tableViewTopics" onMouseClicked="#selectedTopic" prefHeight="460.0" prefWidth="350.0"
                            GridPane.rowIndex="3">
                     <columns>
                         <TableColumn prefWidth="121.0" text="Category">
                             <cellValueFactory>
-                                <PropertyValueFactory property=""/>
+                                <PropertyValueFactory property="topic"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="124.0" text="Title">
                             <cellValueFactory>
-                                <PropertyValueFactory property=""/>
+                                <PropertyValueFactory property="title"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="124.0" text="Read">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="read"/>
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
@@ -95,7 +100,7 @@
                     </items>
                 </TableView>
             </GridPane>
-            <GridPane fx:id="information" prefHeight="900.0" prefWidth="509.0">
+            <GridPane prefHeight="900.0" prefWidth="600.0">
                 <Label text="Information" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER"
                        GridPane.rowIndex="1" GridPane.rowSpan="1">
                     <font>
@@ -105,20 +110,16 @@
                         <Insets bottom="20" top="20"/>
                     </GridPane.margin>
                 </Label>
-                <Label fx:id="locationLabel" text="Location: " GridPane.rowIndex="2" visible="false"/>
-                <Label fx:id="dateLabel" text="Date: " GridPane.rowIndex="3" visible="false"/>
-                <Label fx:id="timeLabel" text="Time: " GridPane.rowIndex="4" visible="false"/>
-                <Label fx:id="artistLabel" text="Artist: " GridPane.rowIndex="5" visible="false"/>
-                <Label fx:id="priceLabel" text="Price: " GridPane.rowIndex="6" visible="false"/>
-                <Label fx:id="descriptionLabel" text="Description: " GridPane.rowIndex="7" visible="false"/>
-                <Label fx:id="location" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false"/>
-                <Label fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"/>
-                <Label fx:id="time" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"/>
-                <Label fx:id="artist" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"/>
-                <Label fx:id="price" GridPane.columnIndex="1" GridPane.rowIndex="6" visible="false"/>
-                <Label fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="7" visible="false"/>
+                <Label text="Title: " GridPane.rowIndex="2"/>
+                <Label text="Description: " GridPane.rowIndex="3"/>
+                <Label text="publishDate: " GridPane.rowIndex="4"/>
+                <Label text="Link: " GridPane.rowIndex="5"/>
+                <Label fx:id="title" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false"/>
+                <Label fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"/>
+                <Label fx:id="publishDate" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"/>
+                <Label fx:id="link" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"/>
                 <columnConstraints>
-                    <ColumnConstraints maxWidth="82.0" minWidth="4.0" prefWidth="82.0"/>
+                    <ColumnConstraints maxWidth="100.0" minWidth="4.0" prefWidth="100.0"/>
                     <ColumnConstraints maxWidth="450.0" minWidth="4.0" prefWidth="273.0"/>
                 </columnConstraints>
             </GridPane>

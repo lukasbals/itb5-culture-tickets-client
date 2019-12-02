@@ -40,7 +40,7 @@ public class BuyTicketGuiController implements Initializable {
     }
 
     @FXML
-    public void backButtonCliched() {
+    public void backButtonClicked() {
         UI.changeScene("/fxml_files/listEvents.fxml");
     }
 }

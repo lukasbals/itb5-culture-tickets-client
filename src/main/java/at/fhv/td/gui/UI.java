@@ -1,10 +1,14 @@
 package at.fhv.td.gui;
 
+import at.fhv.td.jms.Subscriber;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -16,6 +20,15 @@ public class UI extends Application {
         _primaryStage = primaryStage;
         _primaryStage.setTitle("Culture Tickets");
         _primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/fxml_files/login.fxml"))));
+
+        _primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Subscriber.getInstance().close();
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         _primaryStage.show();
     }
 
