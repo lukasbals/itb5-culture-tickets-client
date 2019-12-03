@@ -18,111 +18,151 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.172-ea"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.ListEventsGuiController">
+<?import javafx.scene.control.CheckBox?>
+<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhv.td.gui.ListEventsGuiController">
     <Tab text="Events">
         <BorderPane prefHeight="500.0" prefWidth="900.0">
             <top>
                 <ToolBar>
-                    <TextField fx:id="_searchFieldEvent" promptText="Search event"/>
-                    <TextField fx:id="_searchFieldArtist" promptText="Search artist"/>
-                    <TextField fx:id="_searchFieldLocation" promptText="Search location"/>
-                    <DatePicker fx:id="_searchFieldDate" promptText="Search date"/>
-                    <Button onAction="#searchEvents" text="Search"/>
+                    <TextField fx:id="_searchFieldEvent" promptText="Search event" />
+                    <TextField fx:id="_searchFieldArtist" promptText="Search artist" />
+                    <TextField fx:id="_searchFieldLocation" promptText="Search location" />
+                    <DatePicker fx:id="_searchFieldDate" promptText="Search date" />
+                    <Button onAction="#searchEvents" text="Search" />
                 </ToolBar>
             </top>
             <center>
-                <TableView fx:id="tableViewEvents" editable="true" onMouseClicked="#selectedEvent" prefHeight="590.0"
-                           prefWidth="500.0">
+                <TableView fx:id="tableViewEvents" editable="true" onMouseClicked="#selectedEvent" prefHeight="590.0" prefWidth="500.0">
                     <columns>
                         <TableColumn prefWidth="200.0" text="Event">
                             <cellValueFactory>
-                                <PropertyValueFactory property="eventName"/>
+                                <PropertyValueFactory property="eventName" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Artists">
                             <cellValueFactory>
-                                <PropertyValueFactory property="artists"/>
+                                <PropertyValueFactory property="artists" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Category">
                             <cellValueFactory>
-                                <PropertyValueFactory property="category"/>
+                                <PropertyValueFactory property="category" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Location">
                             <cellValueFactory>
-                                <PropertyValueFactory property="location"/>
+                                <PropertyValueFactory property="location" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Date">
                             <cellValueFactory>
-                                <PropertyValueFactory property="date"/>
+                                <PropertyValueFactory property="date" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="100.0" text="Price from">
                             <cellValueFactory>
-                                <PropertyValueFactory property="minPrice"/>
+                                <PropertyValueFactory property="minPrice" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
                     <items>
-                        <FXCollections fx:id="_events" fx:factory="observableArrayList"/>
+                        <FXCollections fx:id="_events" fx:factory="observableArrayList" />
                     </items>
                 </TableView>
             </center>
         </BorderPane>
     </Tab>
-    <Tab text="News" fx:id="_newsTab">
+    <Tab fx:id="_newsTab" text="News">
         <HBox prefHeight="600.0" prefWidth="900.0">
             <GridPane minHeight="900" prefHeight="600" prefWidth="600.0">
-                <TableView fx:id="tableViewTopics" onMouseClicked="#selectedTopic" prefHeight="460.0" prefWidth="350.0"
-                           GridPane.rowIndex="3">
+                <TableView fx:id="tableViewTopics" onMouseClicked="#selectedTopic" prefHeight="460.0" prefWidth="350.0" GridPane.rowIndex="3">
                     <columns>
                         <TableColumn prefWidth="121.0" text="Category">
                             <cellValueFactory>
-                                <PropertyValueFactory property="topic"/>
+                                <PropertyValueFactory property="topic" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="124.0" text="Title">
                             <cellValueFactory>
-                                <PropertyValueFactory property="title"/>
+                                <PropertyValueFactory property="title" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="124.0" text="Read">
                             <cellValueFactory>
-                                <PropertyValueFactory property="read"/>
+                                <PropertyValueFactory property="read" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
                     <items>
-                        <FXCollections fx:id="_topics" fx:factory="observableArrayList"/>
+                        <FXCollections fx:id="_topics" fx:factory="observableArrayList" />
                     </items>
                 </TableView>
             </GridPane>
             <GridPane prefHeight="900.0" prefWidth="600.0">
-                <Label text="Information" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER"
-                       GridPane.rowIndex="1" GridPane.rowSpan="1">
+                <Label text="Information" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="1">
                     <font>
-                        <Font name="Arial" size="24"/>
+                        <Font name="Arial" size="24" />
                     </font>
                     <GridPane.margin>
-                        <Insets bottom="20" top="20"/>
+                        <Insets bottom="20" top="20" />
                     </GridPane.margin>
                 </Label>
-                <Label text="Title: " GridPane.rowIndex="2"/>
-                <Label text="Description: " GridPane.rowIndex="3"/>
-                <Label text="publishDate: " GridPane.rowIndex="4"/>
-                <Label text="Link: " GridPane.rowIndex="5"/>
-                <Label fx:id="title" GridPane.columnIndex="1" GridPane.rowIndex="2" visible="false"/>
-                <Label fx:id="description" GridPane.columnIndex="1" GridPane.rowIndex="3" visible="false"/>
-                <Label fx:id="publishDate" GridPane.columnIndex="1" GridPane.rowIndex="4" visible="false"/>
-                <Label fx:id="link" GridPane.columnIndex="1" GridPane.rowIndex="5" visible="false"/>
+                <Label text="Title: " GridPane.rowIndex="2" />
+                <Label text="Description: " GridPane.rowIndex="3" />
+                <Label text="publishDate: " GridPane.rowIndex="4" />
+                <Label text="Link: " GridPane.rowIndex="5" />
+                <Label fx:id="title" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label fx:id="description" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label fx:id="publishDate" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label fx:id="link" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <columnConstraints>
-                    <ColumnConstraints maxWidth="100.0" minWidth="4.0" prefWidth="100.0"/>
-                    <ColumnConstraints maxWidth="450.0" minWidth="4.0" prefWidth="273.0"/>
+                    <ColumnConstraints maxWidth="100.0" minWidth="4.0" prefWidth="100.0" />
+                    <ColumnConstraints maxWidth="450.0" minWidth="4.0" prefWidth="273.0" />
                 </columnConstraints>
             </GridPane>
         </HBox>
+    </Tab>
+    <Tab text="Manage News">
+        <GridPane fx:id="addNew" prefHeight="900.0" prefWidth="900.0">
+            <padding>
+                <Insets bottom="60" left="200" right="40" top="60" />
+            </padding>
+            <Label text="New RSS Feed or Message" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.rowSpan="1">
+                <font>
+                    <Font name="Arial" size="24" />
+                </font>
+                <GridPane.margin>
+                    <Insets bottom="20" top="10" />
+                </GridPane.margin>
+            </Label>
+            <Label text="RSS Feed" GridPane.rowIndex="2">
+                <font>
+                    <Font name="Arial" size="16" />
+                </font>
+            </Label>
+            <Label text="Url: " GridPane.rowIndex="3" />
+            <Label GridPane.rowIndex="4"/>
+            <Label text="Message" GridPane.rowIndex="5">
+                <font>
+                    <Font name="Arial" size="16" />
+                </font>
+            </Label>
+            <Label text="Titel: " GridPane.rowIndex="6" />
+            <Label text="Description: " GridPane.rowIndex="7" />
+            <Label GridPane.rowIndex="8"/>
+            <Label text="Topic: " GridPane.rowIndex="9" >
+                <font>
+                    <Font name="Arial" size="16" />
+                </font>
+            </Label>
+            <TextField fx:id="feedUrlTextBox" onKeyReleased="#checkAccept" prefHeight="27.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="titelTextBox" onKeyReleased="#checkAccept" prefWidth="400" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <TextField fx:id="descriptionTextBox" onKeyReleased="#checkAccept" prefHeight="44.0" prefWidth="185.0" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
+            <Button fx:id="addButton" onAction="#addButtonClicked" prefWidth="50" text="Add" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.halignment="RIGHT"/>
+            <columnConstraints>
+                <ColumnConstraints maxWidth="204.0" minWidth="4.0" prefWidth="94.0" />
+                <ColumnConstraints maxWidth="700.0" minWidth="4.0" prefWidth="261.0" />
+            </columnConstraints>
+        </GridPane>
     </Tab>
 </TabPane>

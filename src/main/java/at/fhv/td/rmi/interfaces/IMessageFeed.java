@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface IMessageFeed extends Remote {
     List<ITopicDTO> getTopics(String username) throws RemoteException;
+
+    List<ITopicDTO> getAllTopics() throws RemoteException;
 }

@@ -176,7 +176,7 @@ public class BookingViewGuiController implements Initializable {
         return ticketNumbers;
     }
 
-    private void showErrorMessage(String header, String message) {
+    public static void showErrorMessage(String header, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("An error happened.");
         alert.setHeaderText(header);

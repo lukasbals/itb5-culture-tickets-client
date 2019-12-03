@@ -1,23 +1,25 @@
 package at.fhv.td.gui;
 
 import at.fhv.td.Main;
+import at.fhv.td.jms.Publisher;
 import at.fhv.td.jms.Subscriber;
-import at.fhv.td.rmi.interfaces.IEventDetailedViewDTO;
-import at.fhv.td.rmi.interfaces.ISearchEvent;
-import at.fhv.td.rmi.interfaces.ITopicDTO;
+import at.fhv.td.rmi.interfaces.*;
+import at.fhv.td.rss.FeedMessage;
 import at.fhv.td.rss.FeedMessageEx;
+import at.fhv.td.rss.FeedReader;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -58,6 +60,19 @@ public class ListEventsGuiController implements Initializable {
     @FXML
     private TableView<FeedMessageEx> tableViewTopics;
 
+    @FXML
+    GridPane addNew;
+
+    @FXML
+    Button addButton;
+    @FXML
+    TextField feedUrlTextBox;
+    @FXML
+    TextField titelTextBox;
+    @FXML
+    TextField descriptionTextBox;
+    private SimpleBooleanProperty validAdd = new SimpleBooleanProperty(true);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         _searchFieldDate.setValue(LocalDate.now());
@@ -81,6 +96,9 @@ public class ListEventsGuiController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        loadTopics();
+        addButton.disableProperty().bind(validAdd);
     }
 
     public void searchEvents() throws RemoteException {
@@ -160,5 +178,97 @@ public class ListEventsGuiController implements Initializable {
 
     public ObservableList<FeedMessageEx> getMessageList() {
         return _topics;
+    }
+
+    @FXML
+    public void addButtonClicked() {
+        if (isTopicSelected()) {
+            Publisher publisher = new Publisher(Main.getUserName());
+            if (!feedUrlTextBox.getText().equals("")) {
+                List<FeedMessage> feedMessages = FeedReader.readFeed(feedUrlTextBox.getText());
+                for (FeedMessage feedMessage : feedMessages) {
+                    for (String topic : getTopic()) {
+                        publisher.publish(topic, feedMessage);
+                    }
+                }
+                showSuccessMessage("Feed", "Successfully send");
+            } else {
+                FeedMessage message = new FeedMessage();
+                message.setTitle(titelTextBox.getText());
+                message.setDescription(descriptionTextBox.getText());
+                message.setPublishDate(new Date());
+                message.setLink(" ");
+                for (String topic : getTopic()) {
+                    publisher.publish(topic, message);
+                }
+                showSuccessMessage("Message", "Successfully send");
+            }
+            publisher.close();
+        } else {
+            BookingViewGuiController.showErrorMessage("No Topic selected", "Please select a topic");
+        }
+    }
+
+    private void showSuccessMessage(String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Success");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private List<String> getTopic() {
+        ObservableList<Node> elements = addNew.getChildren();
+        List<String> selectedTopics = new LinkedList<>();
+        for (Node node : elements) {
+            if (node instanceof CheckBox) {
+                CheckBox checkbox = (CheckBox) node;
+                if (checkbox.isSelected()) {
+                    selectedTopics.add(checkbox.getText());
+                }
+            }
+        }
+        return selectedTopics;
+    }
+
+    private void loadTopics() {
+        try {
+            List<ITopicDTO> topics = Main.getSession().createMessageFeed().getAllTopics();
+            int rowIndex = 9;
+            for (ITopicDTO topic : topics) {
+                CheckBox checkbox = new CheckBox(topic.getName());
+                addNew.add(checkbox, 1, rowIndex);
+                rowIndex++;
+            }
+            addNew.getChildren().remove(addButton);
+            addNew.add(addButton, 1, rowIndex);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isTopicSelected() {
+        ObservableList<Node> elements = addNew.getChildren();
+        Boolean isSelected = false;
+        for (Node node : elements) {
+            if (node instanceof CheckBox) {
+                CheckBox checkbox = (CheckBox) node;
+                if (checkbox.isSelected()) {
+                    isSelected = true;
+                }
+            }
+        }
+        return isSelected;
+    }
+
+    @FXML
+    public void checkAccept() {
+        if (feedUrlTextBox.getText() != null) {
+            validAdd.set(false);
+        } else if (titelTextBox.getText() != null && descriptionTextBox.getText() != null) {
+            validAdd.set(false);
+        } else {
+            validAdd.set(true);
+        }
     }
 }
