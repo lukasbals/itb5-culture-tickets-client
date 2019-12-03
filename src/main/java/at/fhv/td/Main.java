@@ -17,10 +17,9 @@ public class Main {
         if (args.length > 0) {
             IP_ADDRESS = args[0];
         }
+
         _sessionFactory = RMI.setupRMI(IP_ADDRESS);
-
         UI.startUI();
-
     }
 
     public static IClientSessionFactory getSessionFactory() {
