@@ -15,24 +15,22 @@ public class Subscriber extends JMSClient implements MessageListener {
     private Subscriber(List<String> topics, String userId, ListEventsGuiController controller) {
         super("subscriber-" + userId, Session.CLIENT_ACKNOWLEDGE);
         _controller = controller;
-        _instance = this;
-        initTopics(topics, userId);
+        initTopics(topics);
     }
 
-    public static Subscriber createInstance(List<String> topics, String userId, ListEventsGuiController controller) {
+    public static void createInstance(List<String> topics, String userId, ListEventsGuiController controller) {
         _instance = new Subscriber(topics, userId, controller);
-        return _instance;
     }
 
     public static Subscriber getInstance() {
         return _instance;
     }
 
-    private void initTopics(List<String> topics, String userId) {
+    private void initTopics(List<String> topics) {
         try {
             for (String topic : topics) {
                 Topic subscribingTopic = _session.createTopic(topic);
-                TopicSubscriber subscriber = _session.createDurableSubscriber(subscribingTopic, userId);
+                TopicSubscriber subscriber = _session.createDurableSubscriber(subscribingTopic, _clientId + "-" + topic);
                 subscriber.setMessageListener(this);
                 _durableSubscribers.add(subscriber);
             }

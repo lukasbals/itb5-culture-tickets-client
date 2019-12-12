@@ -85,16 +85,18 @@ public class ListEventsGuiController implements Initializable {
     }
 
     private void initSubscriber() {
-        List<String> topics = new ArrayList<>();
-        try {
-            for (ITopicDTO iTopicDTO : _messageFeed.getTopics(Main.getUserName())) {
-                String name = iTopicDTO.getName();
-                topics.add(name);
+        if (Subscriber.getInstance() == null) {
+            List<String> topics = new ArrayList<>();
+            try {
+                for (ITopicDTO iTopicDTO : _messageFeed.getTopics(Main.getUserName())) {
+                    String name = iTopicDTO.getName();
+                    topics.add(name);
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
-        } catch (RemoteException e) {
-            e.printStackTrace();
+            Subscriber.createInstance(topics, Main.getUserName(), this);
         }
-        Subscriber.createInstance(topics, Main.getUserName(), this);
     }
 
     private void initSearch() {
@@ -244,13 +246,22 @@ public class ListEventsGuiController implements Initializable {
                 showSuccessMessage("Message", "Successfully send");
             }
             publisher.close();
+
+            _titleTextBox.clear();
+            _descriptionTextArea.clear();
+            _feedUrlTextBox.clear();
+            for (Node node : _addNew.getChildren()) {
+                if (node instanceof CheckBox) {
+                    ((CheckBox) node).setSelected(false);
+                }
+            }
         } else {
             BookingViewGuiController.showErrorMessage("No Topic selected", "Please select a topic");
         }
     }
 
     private void showSuccessMessage(String header, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Success");
         alert.setHeaderText(header);
         alert.setContentText(message);
