@@ -1,7 +1,12 @@
 package at.fhv.td.gui;
 
 import at.fhv.td.Main;
-import at.fhv.td.rmi.interfaces.*;
+import at.fhv.td.communication.IBuyTicket;
+import at.fhv.td.communication.ILoadClient;
+import at.fhv.td.communication.ILoadTicket;
+import at.fhv.td.communication.dto.ClientDTO;
+import at.fhv.td.communication.dto.EventDetailedViewDTO;
+import at.fhv.td.communication.dto.TicketDTO;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,14 +20,13 @@ import javafx.scene.layout.HBox;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.*;
-import java.util.List;
 
 public class BookingViewGuiController implements Initializable {
 
+    private static EventDetailedViewDTO _event;
     private SimpleBooleanProperty validRes = new SimpleBooleanProperty(true);
-    private static IEventDetailedViewDTO _event;
     private ILoadClient _loadClient;
-    private ITicketDTO[] _unavailableTickets;
+    private TicketDTO[] _unavailableTickets;
 
     @FXML
     private Button reserve;
@@ -54,7 +58,19 @@ public class BookingViewGuiController implements Initializable {
     @FXML
     private Label artist;
 
-    private List<IClientDTO> clients;
+    private List<ClientDTO> clients;
+
+    public static void showErrorMessage(String header, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("An error happened.");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    static void setIEvent(EventDetailedViewDTO event) {
+        _event = event;
+    }
 
     public void initialize(URL location, ResourceBundle resources) {
         try {
@@ -85,7 +101,7 @@ public class BookingViewGuiController implements Initializable {
 
     private void loadTickets() throws RemoteException {
         int rowIndex = 10;
-        List<String>  placeCategories = Arrays.asList(_event.getPlaceCategories());
+        List<String> placeCategories = Arrays.asList(_event.getPlaceCategories());
         for (int i = 0; i < placeCategories.size(); i++) {
             String placeCategory = placeCategories.get(i);
             int count = _event.getPlaceCategoriesAmount()[i];
@@ -115,7 +131,7 @@ public class BookingViewGuiController implements Initializable {
     }
 
     private boolean isAvailable(int number, String castegory) throws RemoteException {
-        for (ITicketDTO unavailableTicket : _unavailableTickets) {
+        for (TicketDTO unavailableTicket : _unavailableTickets) {
             if (unavailableTicket.getCategoryName().equals(castegory) && unavailableTicket.getTicketNumber() == number) {
                 return true;
             }
@@ -126,7 +142,7 @@ public class BookingViewGuiController implements Initializable {
     private void loadClients() throws RemoteException {
         clients = _loadClient.loadClients();
         List<String> clientnames = new LinkedList<>();
-        for (IClientDTO client : clients) {
+        for (ClientDTO client : clients) {
             clientnames.add(client.getFirstName() + " " + client.getLastName());
         }
         customername.setItems(FXCollections.observableArrayList(clientnames));
@@ -176,15 +192,7 @@ public class BookingViewGuiController implements Initializable {
         return ticketNumbers;
     }
 
-    public static void showErrorMessage(String header, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("An error happened.");
-        alert.setHeaderText(header);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
-    private void checkMessage(IBuyTicket buy) throws RemoteException{
+    private void checkMessage(IBuyTicket buy) throws RemoteException {
         if (buy.getMessage().contains("failed")) {
             showErrorMessage("Ticket not available", buy.getMessage());
             UI.changeScene("/fxml_files/eventBookingView.fxml");
@@ -194,11 +202,11 @@ public class BookingViewGuiController implements Initializable {
         }
     }
 
-    private ITicketDTO createTicketDTO () throws RemoteException {
-        ITicketDTO ticket = Main.getSession().createTicketDTO();
+    private TicketDTO createTicketDTO() throws RemoteException {
+        TicketDTO ticket = new TicketDTO();
         int clientIndex = customername.getSelectionModel().getSelectedIndex();
         if (clientIndex != -1) {
-            IClientDTO client = clients.get(clientIndex);
+            ClientDTO client = clients.get(clientIndex);
             ticket.setClientId(client.getId());
         }
         ticket.setEventId(_event.getEventId());
@@ -211,7 +219,7 @@ public class BookingViewGuiController implements Initializable {
         if (categoryAndTickets.size() == 0) {
             showErrorMessage("No ticket selected", "Please select a ticket");
         } else {
-            ITicketDTO ticket = createTicketDTO();
+            TicketDTO ticket = createTicketDTO();
             IBuyTicket buy = Main.getSession().createBuyTicket();
             buy.buyTicket(ticket, categoryAndTickets);
             checkMessage(buy);
@@ -224,7 +232,7 @@ public class BookingViewGuiController implements Initializable {
         if (categoryAndTickets.size() == 0) {
             showErrorMessage("No ticket selected", "Please select a ticket");
         } else {
-            ITicketDTO ticket = createTicketDTO();
+            TicketDTO ticket = createTicketDTO();
             IBuyTicket buy = Main.getSession().createBuyTicket();
             buy.reserveTicket(ticket, categoryAndTickets);
             checkMessage(buy);
@@ -234,9 +242,5 @@ public class BookingViewGuiController implements Initializable {
     @FXML
     public void cancelButtonClicked() {
         UI.changeScene("/fxml_files/listEvents.fxml");
-    }
-
-    static void setIEvent(IEventDetailedViewDTO event) {
-        _event = event;
     }
 }

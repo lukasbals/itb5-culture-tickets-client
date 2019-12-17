@@ -1,7 +1,9 @@
 package at.fhv.td;
 
+import at.fhv.td.communication.IClientSessionFactory;
+import at.fhv.td.communication.RMI;
+import at.fhv.td.communication.rmi.IClientSessionFactoryRMI;
 import at.fhv.td.gui.UI;
-import at.fhv.td.rmi.interfaces.IClientSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -17,7 +19,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @PrepareForTest({RMI.class, UI.class})
 public class MainTest {
     @Mock
-    private IClientSessionFactory _sessionFactory;
+    private IClientSessionFactoryRMI _sessionFactory;
 
     @Test
     public void getSessionFactory() {

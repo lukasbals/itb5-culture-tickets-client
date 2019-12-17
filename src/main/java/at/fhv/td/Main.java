@@ -1,25 +1,44 @@
 package at.fhv.td;
 
+import at.fhv.td.communication.EJB;
+import at.fhv.td.communication.IClientSession;
+import at.fhv.td.communication.IClientSessionFactory;
+import at.fhv.td.communication.RMI;
 import at.fhv.td.gui.UI;
-import at.fhv.td.rmi.interfaces.IClientSession;
-import at.fhv.td.rmi.interfaces.IClientSessionFactory;
 
 /**
  * @author Lukas Bals
  */
 public class Main {
     public static String IP_ADDRESS = "10.0.51.93";
+    public static String CONNECTION_TYPE = "rmi";
     private static IClientSessionFactory _sessionFactory = null;
     private static IClientSession _session = null;
     private static String _userName;
 
     public static void main(String[] args) {
-        if (args.length > 0) {
-            IP_ADDRESS = args[0];
-        }
+        try {
+            if (args.length > 0) {
+                IP_ADDRESS = args[0];
+                if (args.length > 1) {
+                    CONNECTION_TYPE = args[1];
+                }
+            }
 
-        _sessionFactory = RMI.setupRMI(IP_ADDRESS);
-        UI.startUI();
+            switch (CONNECTION_TYPE) {
+                default:
+                case "rmi":
+                    _sessionFactory = RMI.setupRMI(IP_ADDRESS);
+                    break;
+                case "ejb":
+                    _sessionFactory = EJB.setupEJB(IP_ADDRESS);
+                    break;
+            }
+
+            UI.startUI();
+        } catch (Exception e) {
+            printHelp();
+        }
     }
 
     public static IClientSessionFactory getSessionFactory() {
@@ -40,5 +59,11 @@ public class Main {
 
     public static void setUserName(String userName) {
         _userName = userName;
+    }
+
+    private static void printHelp() {
+        System.out.println("Usage:");
+        System.out.println(" - options: java -jar itb5-culture-tickets-client [ip/localhost] [rmi/ejb]");
+        System.out.println(" - default: java -jar itb5-culture-tickets-client 10.0.51.93 rmi");
     }
 }

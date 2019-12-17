@@ -1,12 +1,12 @@
 package at.fhv.td.gui;
 
 import at.fhv.td.Main;
+import at.fhv.td.communication.IMessageFeed;
+import at.fhv.td.communication.ISearchEvent;
+import at.fhv.td.communication.dto.EventDetailedViewDTO;
+import at.fhv.td.communication.dto.TopicDTO;
 import at.fhv.td.jms.Publisher;
 import at.fhv.td.jms.Subscriber;
-import at.fhv.td.rmi.interfaces.IEventDetailedViewDTO;
-import at.fhv.td.rmi.interfaces.IMessageFeed;
-import at.fhv.td.rmi.interfaces.ISearchEvent;
-import at.fhv.td.rmi.interfaces.ITopicDTO;
 import at.fhv.td.rss.FeedMessage;
 import at.fhv.td.rss.FeedMessageEx;
 import at.fhv.td.rss.FeedReader;
@@ -35,7 +35,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class ListEventsGuiController implements Initializable {
     ISearchEvent _searchEvent;
     @FXML
-    ObservableList<IEventDetailedViewDTO> _events;
+    ObservableList<EventDetailedViewDTO> _events;
     @FXML
     TextField _searchFieldEvent;
     @FXML
@@ -69,7 +69,7 @@ public class ListEventsGuiController implements Initializable {
     @FXML
     TextArea _descriptionTextArea;
     @FXML
-    private TableView<IEventDetailedViewDTO> _tableViewEvents;
+    private TableView<EventDetailedViewDTO> _tableViewEvents;
     @FXML
     private TableView<FeedMessageEx> _tableViewTopics;
     private SimpleBooleanProperty validAdd = new SimpleBooleanProperty(true);
@@ -88,7 +88,7 @@ public class ListEventsGuiController implements Initializable {
         if (Subscriber.getInstance() == null) {
             List<String> topics = new ArrayList<>();
             try {
-                for (ITopicDTO iTopicDTO : _messageFeed.getTopics(Main.getUserName())) {
+                for (TopicDTO iTopicDTO : _messageFeed.getTopics(Main.getUserName())) {
                     String name = iTopicDTO.getName();
                     topics.add(name);
                 }
@@ -114,7 +114,7 @@ public class ListEventsGuiController implements Initializable {
 
     public void searchEvents() throws RemoteException {
         _events.clear();
-        List<IEventDetailedViewDTO> events = _searchEvent.searchForEvents(
+        List<EventDetailedViewDTO> events = _searchEvent.searchForEvents(
                 _searchFieldEvent.getText(),
                 _searchFieldArtist.getText(),
                 _searchFieldLocation.getText(),
@@ -127,7 +127,7 @@ public class ListEventsGuiController implements Initializable {
     public void selectedEvent(MouseEvent doubleClick) {
         int index = _tableViewEvents.getSelectionModel().getSelectedIndex();
         if (index != -1) {
-            IEventDetailedViewDTO event = _events.get(index);
+            EventDetailedViewDTO event = _events.get(index);
             if (doubleClick.getClickCount() == 2) {
                 BookingViewGuiController.setIEvent(event);
                 UI.changeScene("/fxml_files/eventBookingView.fxml");
@@ -284,15 +284,15 @@ public class ListEventsGuiController implements Initializable {
 
     private void loadTopics() {
         try {
-            List<ITopicDTO> topics = _messageFeed.getAllTopics();
-            int rowIndex = 9;
-            for (ITopicDTO topic : topics) {
-                CheckBox checkbox = new CheckBox(topic.getName());
-                _addNew.add(checkbox, 1, rowIndex);
-                rowIndex++;
-            }
-            _addNew.getChildren().remove(_addButton);
-            _addNew.add(_addButton, 1, rowIndex);
+        List<TopicDTO> topics = _messageFeed.getAllTopics();
+        int rowIndex = 9;
+        for (TopicDTO topic : topics) {
+            CheckBox checkbox = new CheckBox(topic.getName());
+            _addNew.add(checkbox, 1, rowIndex);
+            rowIndex++;
+        }
+        _addNew.getChildren().remove(_addButton);
+        _addNew.add(_addButton, 1, rowIndex);
         } catch (RemoteException e) {
             e.printStackTrace();
         }

@@ -14,6 +14,19 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>fish.payara.extras</groupId>
+            <artifactId>payara-embedded-all</artifactId>
+            <version>5.194</version>
+        </dependency>
+        <dependency>
+            <groupId>at.fhv.td</groupId>
+            <artifactId>itb5-culture-tickets</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/itb5-culture-tickets-shared-1.0-SNAPSHOT.jar</systemPath>
+        </dependency>
+
         <!-- RSS feed parser -->
         <dependency>
             <groupId>com.rometools</groupId>

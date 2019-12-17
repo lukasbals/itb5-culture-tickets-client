@@ -1,7 +1,8 @@
 package at.fhv.td.gui;
 
 import at.fhv.td.Main;
-import at.fhv.td.rmi.interfaces.IClientSession;
+import at.fhv.td.communication.IClientSession;
+import at.fhv.td.communication.ejb.IClientSessionRemote;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
