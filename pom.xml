@@ -24,7 +24,7 @@
             <artifactId>itb5-culture-tickets</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/itb5-culture-tickets-shared-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/itb5-culture-tickets-shared-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <!-- RSS feed parser -->
