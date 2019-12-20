@@ -11,7 +11,7 @@ import at.fhv.td.gui.UI;
  */
 public class Main {
     public static String IP_ADDRESS = "10.0.51.93";
-    public static String CONNECTION_TYPE = "rmi";
+    private static String CONNECTION_TYPE = "rmi";
     private static IClientSessionFactory _sessionFactory = null;
     private static IClientSession _session = null;
     private static String _userName;

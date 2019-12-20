@@ -192,28 +192,24 @@ public class ListEventsGuiController implements Initializable {
 
     private void startNotificationWatcher() {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        final Runnable notification = () -> {
-            Platform.runLater(() -> {
-                boolean unreadMessages = _topics.stream().anyMatch(msg -> !msg.isRead());
-                int unreadMessagesCount = (int) _topics.stream().filter(msg -> !msg.isRead()).count();
-                _newsTab.setText("News (" + unreadMessagesCount + ")");
+        final Runnable notification = () -> Platform.runLater(() -> {
+            boolean unreadMessages = _topics.stream().anyMatch(msg -> !msg.isRead());
+            int unreadMessagesCount = (int) _topics.stream().filter(msg -> !msg.isRead()).count();
+            _newsTab.setText("News (" + unreadMessagesCount + ")");
 
-                if (unreadMessages) {
-                    if (_newsTab.getStyle() == null) {
-                        _newsTab.setStyle("-fx-background-color: dodgerblue;");
-                    } else {
-                        _newsTab.setStyle(null);
-                    }
+            if (unreadMessages) {
+                if (_newsTab.getStyle() == null) {
+                    _newsTab.setStyle("-fx-background-color: dodgerblue;");
                 } else {
                     _newsTab.setStyle(null);
                 }
-            });
-        };
+            } else {
+                _newsTab.setStyle(null);
+            }
+        });
         final ScheduledFuture<?> notificationHandler = scheduler.scheduleAtFixedRate(notification, 3, 1, SECONDS);
         scheduler.schedule(
-                () -> {
-                    notificationHandler.cancel(true);
-                },
+                () -> notificationHandler.cancel(true),
                 8760,
                 HOURS);
     }
@@ -284,15 +280,15 @@ public class ListEventsGuiController implements Initializable {
 
     private void loadTopics() {
         try {
-        List<TopicDTO> topics = _messageFeed.getAllTopics();
-        int rowIndex = 9;
-        for (TopicDTO topic : topics) {
-            CheckBox checkbox = new CheckBox(topic.getName());
-            _addNew.add(checkbox, 1, rowIndex);
-            rowIndex++;
-        }
-        _addNew.getChildren().remove(_addButton);
-        _addNew.add(_addButton, 1, rowIndex);
+            List<TopicDTO> topics = _messageFeed.getAllTopics();
+            int rowIndex = 9;
+            for (TopicDTO topic : topics) {
+                CheckBox checkbox = new CheckBox(topic.getName());
+                _addNew.add(checkbox, 1, rowIndex);
+                rowIndex++;
+            }
+            _addNew.getChildren().remove(_addButton);
+            _addNew.add(_addButton, 1, rowIndex);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -314,9 +310,7 @@ public class ListEventsGuiController implements Initializable {
 
     @FXML
     public void checkAccept() {
-        if (_feedUrlTextBox.getText() != null) {
-            validAdd.set(false);
-        } else if (_titleTextBox.getText() != null && _descriptionTextArea.getText() != null) {
+        if (_feedUrlTextBox.getText() != null || (_titleTextBox.getText() != null && _descriptionTextArea.getText() != null)) {
             validAdd.set(false);
         } else {
             validAdd.set(true);

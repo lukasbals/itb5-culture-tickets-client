@@ -11,7 +11,10 @@ import java.rmi.registry.Registry;
  * @author Lukas Bals
  */
 public class RMI {
-    private static int PORT = 25565;
+    private static final int PORT = 25565;
+
+    private RMI() {
+    }
 
     public static IClientSessionFactoryRMI setupRMI(String host) {
         try {

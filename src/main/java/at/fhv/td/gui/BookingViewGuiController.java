@@ -130,7 +130,7 @@ public class BookingViewGuiController implements Initializable {
         gridpane.add(buttonBox, 0, rowIndex);
     }
 
-    private boolean isAvailable(int number, String castegory) throws RemoteException {
+    private boolean isAvailable(int number, String castegory) {
         for (TicketDTO unavailableTicket : _unavailableTickets) {
             if (unavailableTicket.getCategoryName().equals(castegory) && unavailableTicket.getTicketNumber() == number) {
                 return true;
@@ -153,7 +153,7 @@ public class BookingViewGuiController implements Initializable {
         validRes.set(customername.getSelectionModel().getSelectedItem() == null);
     }
 
-    private HashMap<Long, Integer[]> checkCheckboxes() throws RemoteException {
+    private HashMap<Long, Integer[]> checkCheckboxes() {
         ObservableList<Node> elements = gridpane.getChildren();
         String placeCategory;
         HashMap<Long, Integer[]> ticketNumbers = new HashMap<>();
