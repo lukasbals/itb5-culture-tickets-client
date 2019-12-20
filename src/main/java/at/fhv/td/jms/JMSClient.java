@@ -16,7 +16,7 @@ abstract class JMSClient {
 
     JMSClient(String clientId, int acknowledgeType) {
         try {
-            _conFac = new ActiveMQConnectionFactory("tcp://" + Main.IP_ADDRESS + ":61616");
+            _conFac = new ActiveMQConnectionFactory("tcp://" + Main.IP_ADDRESS + ":61617");
             _con = _conFac.createTopicConnection();
             _clientId = "culture-tickets-" + clientId;
             _con.setClientID(_clientId);

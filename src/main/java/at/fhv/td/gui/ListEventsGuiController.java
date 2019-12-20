@@ -310,10 +310,6 @@ public class ListEventsGuiController implements Initializable {
 
     @FXML
     public void checkAccept() {
-        if (_feedUrlTextBox.getText() != null || (_titleTextBox.getText() != null && _descriptionTextArea.getText() != null)) {
-            validAdd.set(false);
-        } else {
-            validAdd.set(true);
-        }
+        validAdd.set(!(_feedUrlTextBox.getText() != null || (_titleTextBox.getText() != null && _descriptionTextArea.getText() != null)));
     }
 }
