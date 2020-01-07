@@ -77,10 +77,8 @@ public class ListEventsGuiController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initPermissions();
         initUICustomization();
-        startNotificationWatcher();
-        initSubscriber();
+        initPermissions();
         initSearch();
     }
 
@@ -108,7 +106,6 @@ public class ListEventsGuiController implements Initializable {
             e.printStackTrace();
         }
 
-        loadTopics();
         _addButton.disableProperty().bind(validAdd);
     }
 
@@ -125,13 +122,18 @@ public class ListEventsGuiController implements Initializable {
 
     @FXML
     public void selectedEvent(MouseEvent doubleClick) {
-        int index = _tableViewEvents.getSelectionModel().getSelectedIndex();
-        if (index != -1) {
-            EventDetailedViewDTO event = _events.get(index);
-            if (doubleClick.getClickCount() == 2) {
-                BookingViewGuiController.setIEvent(event);
-                UI.changeScene("/fxml_files/eventBookingView.fxml");
+        try {
+            if (Main.getSession().createClient() != null) {
+                int index = _tableViewEvents.getSelectionModel().getSelectedIndex();
+                if (index != -1) {
+                    EventDetailedViewDTO event = _events.get(index);
+                    if (doubleClick.getClickCount() == 2) {
+                        BookingViewGuiController.setIEvent(event);
+                        UI.changeScene("/fxml_files/eventBookingView.fxml");
+                    }
+                }
             }
+        } catch (RemoteException ignored) {
         }
     }
 
@@ -165,6 +167,9 @@ public class ListEventsGuiController implements Initializable {
     }
 
     private void initUICustomization() {
+        _createFeedTab.setDisable(true);
+        _newsTab.setDisable(true);
+
         _tableViewTopics.setRowFactory(tv -> new TableRow<FeedMessageEx>() {
             @Override
             public void updateItem(FeedMessageEx item, boolean empty) {
@@ -181,12 +186,19 @@ public class ListEventsGuiController implements Initializable {
     private void initPermissions() {
         try {
             _messageFeed = Main.getSession().createMessageFeed();
+
+            if (Main.getSession().isFeedWriter()) {
+                _createFeedTab.setDisable(false);
+                loadTopics();
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
 
         if (_messageFeed != null) {
-            _createFeedTab.setDisable(false);
+            _newsTab.setDisable(false);
+            startNotificationWatcher();
+            initSubscriber();
         }
     }
 

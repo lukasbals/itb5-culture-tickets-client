@@ -21,10 +21,10 @@
         </dependency>
         <dependency>
             <groupId>at.fhv.td</groupId>
-            <artifactId>itb5-culture-tickets</artifactId>
+            <artifactId>itb5-culture-tickets-shared</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/itb5-culture-tickets-shared-1.0-SNAPSHOT.jar</systemPath>
+            <systemPath>${project.basedir}/lib/itb5-culture-tickets-shared-1.0-SNAPSHOT.jar</systemPath>
         </dependency>
 
         <!-- RSS feed parser -->
@@ -41,7 +41,7 @@
             <version>5.7.0</version>
         </dependency>
 
-        <!-- RSS feed parser -->
+        <!-- testing dependencies -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
