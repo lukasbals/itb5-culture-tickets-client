@@ -49,8 +49,12 @@ Run the app with the following commands:
 java -jar target/itb5-culture-tickets-client-1.0-SNAPSHOT.jar
 ```
 
-If you want to use the locally running backend specify the host manually:
-
+If you want to specify the host and connection type manually:
 ```shell script
-java -jar target/itb5-culture-tickets-client-1.0-SNAPSHOT.jar localhost
+java -jar itb5-culture-tickets-client [ip/localhost] [rmi/ejb]
+```
+
+default: 
+```shell script
+java -jar itb5-culture-tickets-client 10.0.51.93 rmi
 ```
