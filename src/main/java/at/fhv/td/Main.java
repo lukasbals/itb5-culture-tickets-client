@@ -63,7 +63,7 @@ public class Main {
 
     private static void printHelp() {
         System.out.println("Usage:");
-        System.out.println(" - options: java -jar itb5-culture-tickets-client [ip/localhost] [rmi/ejb]");
-        System.out.println(" - default: java -jar itb5-culture-tickets-client 10.0.51.93 rmi");
+        System.out.println(" - options: java -jar itb5-culture-tickets-client-1.0-SNAPSHOT.jar [ip/localhost] [rmi/ejb]");
+        System.out.println(" - default: java -jar itb5-culture-tickets-client-1.0-SNAPSHOT.jar 10.0.51.93 rmi");
     }
 }

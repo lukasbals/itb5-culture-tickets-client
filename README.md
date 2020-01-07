@@ -46,15 +46,15 @@ mvn clean -U package
 Run the app with the following commands:
 
 ```shell script
-java -jar target/itb5-culture-tickets-client-1.0-SNAPSHOT.jar
+java -jar itb5-culture-tickets-client-1.0-SNAPSHOT.jar
 ```
 
 If you want to specify the host and connection type manually:
 ```shell script
-java -jar itb5-culture-tickets-client [ip/localhost] [rmi/ejb]
+java -jar itb5-culture-tickets-client-1.0-SNAPSHOT.jar [ip/localhost] [rmi/ejb]
 ```
 
 default: 
 ```shell script
-java -jar itb5-culture-tickets-client 10.0.51.93 rmi
+java -jar itb5-culture-tickets-client-1.0-SNAPSHOT.jar 10.0.51.93 rmi
 ```
